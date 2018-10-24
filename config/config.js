@@ -25,6 +25,10 @@ export default {
             component: './hello'
           },
           {
+            path: 'index',
+            component: './index'
+          },
+          {
             path: 'card',
             component: './puzzlecards'
           },

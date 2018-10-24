@@ -1,0 +1,24 @@
+/* 不要在值上使用引号；
+.号要紧跟 hello，定义一个 class 选择器 */
+
+/* CSS Modules不是一个官方的规范，也不是浏览器的一种机制，它是一种构建步骤中的一个进程。
+（构建通常需要webpack或者browserify的帮助）。通过构建工具的帮助，可以将class的名字或者选择器的名字作用域化。
+（类似命名空间化。） */
+
+/*文字样式*/
+.hello {
+    font-size: 32px;
+    font-weight: bold;
+    color: burlywood;
+  }
+
+/*时间样式*/
+.time {
+    color: blueviolet;
+} 
+
+/*按钮样式*/
+.button {
+    margin-top: 20px;
+    border-radius: 20px;
+} 

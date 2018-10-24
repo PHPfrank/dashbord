@@ -143,7 +143,7 @@ class List extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state.cards);
+  //console.log(state.cards);
   return {
     cardsList: state.cards.cardsList,
     cardsLoading: state.loading.effects['cards/queryList'],
