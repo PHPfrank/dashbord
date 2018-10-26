@@ -22,3 +22,12 @@
     margin-top: 20px;
     border-radius: 20px;
 } 
+
+/*文本样式*/
+.title {
+    font-size: 26px;
+}
+
+.custom-icons-list > .anticon {
+    margin-right: 6px;
+  }

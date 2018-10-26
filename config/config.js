@@ -22,7 +22,7 @@ export default {
         routes: [
           {
             path: '/',
-            component: './hello'
+            component: './home'
           },
           {
             path: 'index',
@@ -51,6 +51,11 @@ export default {
       proxy: {
           '/dev': {
             target: 'https://08ad1pao69.execute-api.us-east-1.amazonaws.com',
+            changeOrigin: true,
+          },
+          //v1接口转发api
+          '/admin': {
+            target: 'http://pin.com',
             changeOrigin: true,
           },
         },

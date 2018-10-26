@@ -19,7 +19,7 @@ export default class BasicLayout extends Component {
                 <Menu.Item key="1">
                   <Link to="/card">
                   <Icon type="pie-chart" />
-                  <span>我的react后台</span>
+                  <span>后台主页</span>
                   </Link>
                 </Menu.Item>
                 <SubMenu
