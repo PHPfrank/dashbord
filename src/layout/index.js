@@ -17,7 +17,7 @@ export default class BasicLayout extends Component {
               <div style={{ height: '32px', background: 'rgba(255,255,255,.2)', margin: '16px'}}/>
               <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
                 <Menu.Item key="1">
-                  <Link to="/card">
+                  <Link to="/home">
                   <Icon type="pie-chart" />
                   <span>后台主页</span>
                   </Link>

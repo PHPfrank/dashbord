@@ -29,9 +29,9 @@ class User extends React.Component{
         }
       },
       {
-        title: '操作',
+        title: '状态',
         dataIndex: '',
-        render: (_, { status,user_id }) => {
+        render: (_, { status,user_id }) => {        
           if(status == 0){
             return (
             <Button type="danger" onClick={() => { this.cancel(user_id); }}>注销用户</Button>
@@ -40,15 +40,16 @@ class User extends React.Component{
             return (
               <Button type="primary" onClick={() => { this.cancel(user_id); }}>解禁用户</Button>
             );
-          }          
+          }         
         },
       },
+      { title: '操作', dataIndex: '', render: (_,{user_id}) => <a href={"./user/detail?user_id=" + user_id}>查看详情</a> },
     ];
 
     //注销用户
     cancel = (user_id) => {
       var url = '/admin/react/cancel';
-      
+      const _this=this;
       axios.get(url,{
         params: {
           user_id: user_id
@@ -57,15 +58,19 @@ class User extends React.Component{
         .then(function (response) {
             if(response.data.error == 0){
                 //全局提示
-               message.success('操作成功',1);
+               message.success('操作成功',1); 
+               //重新加载数据
+               _this.props.dispatch({
+                type: 'users/getList',
+              }); 
             }else{
                 //全局提示
                message.error('操作失败',1);
             }
-        })       
+        }) 
     };
 
-    //action触发model下的queryList
+    //action触发model，获取页面数据
     componentDidMount() {
       this.props.dispatch({
         type: 'users/getList',
@@ -73,7 +78,7 @@ class User extends React.Component{
     }
 
     render() {
-
+      
         const { userData } = this.props;
         
         return (
@@ -86,8 +91,9 @@ class User extends React.Component{
 }
 
 function mapStateToProps(state) {
+    //console.log(state);
     return {
-      userData:state.users.data,
+      userData:state.users.users,
     };
   }
 

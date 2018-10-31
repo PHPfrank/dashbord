@@ -3,7 +3,7 @@ import request from '../util/request';
 export default {
   namespace : 'cards',
   state     : {
-    cardsList: [ ],
+    cardsList: [],
     statistic: {},
   },
   effects: {
