@@ -1,9 +1,21 @@
 import React from 'react';
-import { Form, Input, message,Select,Button,Avatar} from 'antd';
+import { Form, Input, message,Select,Button,Avatar,Upload, Icon} from 'antd';
 import axios from 'axios';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
+
+function beforeUpload(file) {
+  const isJPG = file.type === 'image/jpeg';
+  if (!isJPG) {
+    message.error('You can only upload JPG file!');
+  }
+  const isLt2M = file.size / 1024 / 1024 < 2;
+  if (!isLt2M) {
+    message.error('Image must smaller than 2MB!');
+  }
+  return isJPG && isLt2M;
+}
 
 class UserDetail extends React.Component {
 
@@ -21,7 +33,9 @@ class UserDetail extends React.Component {
     super(props);
     this.state={
       user:[],
-      isLoaded:false
+      imageUrl:"",
+      isLoaded:false,
+      loading: false,
     }
   }
 
@@ -39,6 +53,7 @@ class UserDetail extends React.Component {
           if(response.data.error == 0){
             _this.setState({
               user:response.data.data.user,
+              imageUrl:response.data.data.user.avatar,
               isLoaded:true
             });
           }else{
@@ -52,6 +67,7 @@ class UserDetail extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        values.avatar = this.state.imageUrl;
         var url = '/admin/react/editUser';
         axios.post(url,values)
           .then(function (response) {
@@ -69,12 +85,36 @@ class UserDetail extends React.Component {
     this.componentDidMount()
   }
 
+  
+  handleChange = (info) => {
+    if (info.file.status === 'uploading') {
+      this.setState({ loading: true });
+      return;
+    }
+    if (info.file.status === 'done') {
+      // Get this url from response in real world.
+      if(info.file.response.msg != ""){
+        this.setState({
+        imageUrl:info.file.response.msg,     
+      });
+      }      
+    }
+  }
+
 
   render(){
   
     const { form: { getFieldDecorator } } = this.props;
+    const uploadButton = (
+      <div>
+        <Icon type={this.state.loading ? 'loading' : 'plus'} />
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    );
+    const imageUrl = this.state.imageUrl;
     
     return(
+      <div>
       <Form layout="horizontal" onSubmit={this.handleSubmit}>
         <FormItem
           label="记录ID"
@@ -102,7 +142,18 @@ class UserDetail extends React.Component {
           {getFieldDecorator('avatar', {
             initialValue: this.state.user.avatar,
           })(
-            <Avatar shape="square" size={128} src={this.state.user.avatar} icon="user" />
+            //<Avatar shape="square" size={128} src={this.state.user.avatar} icon="user" />
+            <Upload
+              name="file_data"
+              listType="picture-card"
+              className="avatar-uploader"
+              showUploadList={false}
+              action="/admin/react/upload"
+              beforeUpload={beforeUpload}
+              onChange={this.handleChange}
+            >
+              {imageUrl ? <img src={imageUrl} width="128px" height="128px" alt="avatar" /> : uploadButton}
+            </Upload>
           )}
         </FormItem>
         <FormItem
@@ -143,6 +194,7 @@ class UserDetail extends React.Component {
           </Button>
         </FormItem>
     </Form>
+      </div>  
     );
   }
 }
