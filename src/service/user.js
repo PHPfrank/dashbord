@@ -1,15 +1,16 @@
 import request from '../util/request';
 
 //获取所有用户
-export function all(){
+export function all(values){
     return request(`/admin/react/getAllUser`, {
-        method: 'GET',
+        method: 'POST',
+        body: JSON.stringify(values),
       });
 }
 
 //获取单个用户
 export function single(id){
-    return request(`/admin/react/getAllUser?user_id=${id}`, {
+    return request(`/admin/react/getSingleUser?user_id=${id}`, {
         method: 'GET',
       });
 }

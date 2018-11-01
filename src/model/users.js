@@ -12,8 +12,8 @@ export default {
   //effects做ajax请求，拿到数据后异步展示    
   effects: {
     //queryInit:获取所有用户
-    *getList({ payload }, { select, call, put }) {
-      const users = yield call(usersService.all);
+    *getList({ payload : values }, { call, put, select }) {
+      const users = yield call(usersService.all,values);
       yield put({ type: 'getAll', payload: users });
     },
     //getSingle:获取单个用户

@@ -1,8 +1,24 @@
-import { Table , Button , Avatar ,message } from 'antd';
+import { Table,Button,Avatar,message,Form,Select,Input,DatePicker,LocaleProvider} from 'antd';
 import { connect } from 'dva';
 import axios from 'axios';
+import myStyles from '../../style.css';
+import zhCN from 'antd/lib/locale-provider/zh_CN';
+
+const FormItem = Form.Item;
+const Option = Select.Option;
+const { RangePicker } = DatePicker;
+const rangeConfig = {
+  rules: [{ type: 'array'}],
+};
 
 class User extends React.Component{
+
+    constructor(props){
+      super(props);
+      this.state={
+        created_at:"",
+      }
+    }
   
     columns = [
       {
@@ -74,17 +90,93 @@ class User extends React.Component{
     componentDidMount() {
       this.props.dispatch({
         type: 'users/getList',
+        payload:{},
       });
+    }
+
+    //提交form筛选
+    handleSubmit = (e) => {
+      e.preventDefault();
+      //form表单处理
+      this.props.form.validateFields((err, values) => {
+        // Should format date value before submit.
+        values['created_at'] = this.timeHandle(values['created_at']);
+        if (!err) {
+          //console.log(this.state);
+          this.props.dispatch({
+            type: 'users/getList',
+            payload:values,
+          });
+        }
+      });
+    }
+    
+    //时间处理
+    timeHandle(rangeValue){
+      if(rangeValue){
+        var new_time = rangeValue[0].format('YYYY-MM-DD HH:mm:ss') + " - " + rangeValue[1].format('YYYY-MM-DD HH:mm:ss');
+      }else{
+        var new_time = this.state.created_at;
+      }
+      return new_time;
     }
 
     render() {
       
         const { userData } = this.props;
+
+        const { getFieldDecorator } = this.props.form;
         
         return (
+          <div>
+            <div style={{marginBottom:'20px'}}>
+            <span className={myStyles.title}>用户管理</span>
+            </div>
+            <div>
+              <LocaleProvider locale={zhCN}>
+              <Form layout="inline" onSubmit={this.handleSubmit} style={{marginBottom:"20px"}}>
+                <FormItem
+                  label="昵称"
+                  labelCol = {{ span: 6 }}
+                  wrapperCol = {{ span: 18 }}
+                >{getFieldDecorator('nickname', {
+                  initialValue: "",
+                })(
+                  <Input placeholder="" />
+                )}               
+                </FormItem>
+                <FormItem
+                  label="性别"
+                >{getFieldDecorator('sex', {
+                  initialValue: "0",
+                })(
+                  <Select style={{ width: 100 }}>
+                    <Option value="0">不限</Option>
+                    <Option value="1">男</Option>
+                    <Option value="2">女</Option>
+                  </Select>
+                )}
+                </FormItem>
+                <FormItem
+                  label="注册时间"
+                >
+                  {getFieldDecorator('created_at', rangeConfig)(                 
+                      <RangePicker 
+                      showTime 
+                      format="YYYY-MM-DD HH:mm:ss" 
+                      />
+                  )}
+                </FormItem>
+                <FormItem>
+                  <Button type="primary" htmlType="submit">查询</Button>
+                </FormItem>
+              </Form>
+              </LocaleProvider>
+            </div> 
             <div className="gutter-example" >
               <Table rowKey="id" dataSource={userData} columns={this.columns} />
-            </div>   
+            </div>
+          </div>     
           );
     }  
 
@@ -97,4 +189,4 @@ function mapStateToProps(state) {
     };
   }
 
-export default connect(mapStateToProps)(User);
+export default connect(mapStateToProps)(Form.create()(User));
