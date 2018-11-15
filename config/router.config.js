@@ -28,8 +28,9 @@ export default [
             //用户模块
             { path: '/dashboard/user', component: 'dashboard/user/user.js' },
             { path: '/dashboard/user/detail', component: 'dashboard/user/detail.js' },
-            { path: '/dashboard/order', component: 'dashboard/order' },
-            { path: '/dashboard/count', component: 'dashboard/count' }
+            { path: '/dashboard/count', component: 'dashboard/count' },
+            //订单模块
+            { path: '/dashboard/order', component: 'dashboard/order/order.js' },
           ],
         },
       ],

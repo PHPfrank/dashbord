@@ -21,7 +21,7 @@ class Login extends React.Component {
                 _this.props.history.push('/dashboard'); 
               }else{
                   //全局提示
-                message.error('登录失败',1);
+                message.error('账号或密码错误',1);
               }
           })
       }
