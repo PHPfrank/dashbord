@@ -28,7 +28,7 @@ export default class BasicLayout extends Component {
                 >
                    <Menu.Item key="2"><Link to="/dashboard/user">用户管理</Link></Menu.Item>
                    <Menu.Item key="3"><Link to="/dashboard/order">订单管理</Link></Menu.Item>
-                   <Menu.Item key="4"><Link to="/dashboard/count">平台日志</Link></Menu.Item>
+                   <Menu.Item key="4"><Link to="/dashboard/public">通用功能</Link></Menu.Item>
                 </SubMenu>
               </Menu>
             </Sider>

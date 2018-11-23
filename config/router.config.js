@@ -31,6 +31,8 @@ export default [
             { path: '/dashboard/count', component: 'dashboard/count' },
             //订单模块
             { path: '/dashboard/order', component: 'dashboard/order/order.js' },
+            //公用模块
+            { path: '/dashboard/public', component: 'dashboard/public/public.js' },
           ],
         },
       ],

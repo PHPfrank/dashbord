@@ -129,6 +129,24 @@ class Order extends React.Component{
       return new_time;
     }
 
+    //提交form筛选
+    handleSubmit = (e) => {
+      e.preventDefault();
+      //form表单处理
+      this.props.form.validateFields((err, values) => {
+        // Should format date value before submit.
+        values['created_at'] = this.timeHandle(values['created_at']);
+        if (!err) {
+          //console.log(this.state);
+          this.props.dispatch({
+            type: 'orders/getList',
+            payload:values,
+          });
+        }
+      });
+    }
+
+
     render() {
       
         const { orderData } = this.props;
@@ -162,7 +180,7 @@ class Order extends React.Component{
                     <Option value="">不限</Option>
                     <Option value="0">待支付</Option>
                     <Option value="1">支付完成</Option>
-                    <Option value="1">支付失败</Option>
+                    <Option value="-1">支付失败</Option>
                   </Select>
                 )}
                 </FormItem>
