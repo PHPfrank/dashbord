@@ -31,9 +31,9 @@ export default class BasicLayout extends Component {
 
     //修改密码
     editPwd = () => {
-      var origin_pwd = document.getElementById("origin_pwd").value;
-      var new_pwd = document.getElementById("new_pwd").value;
-      var url = "/admin/react/editUserPwd";
+      const origin_pwd = document.getElementById("origin_pwd").value;
+      const new_pwd = document.getElementById("new_pwd").value;
+      const url = '/admin/react/editUserPwd';
       const _this = this;
       axios.post(url, {
           origin_pwd: origin_pwd,
@@ -56,7 +56,7 @@ export default class BasicLayout extends Component {
 
     //用户退出
     userLogout = () => {
-      var url = "/admin/react/userLogout";
+      const url = '/admin/react/userLogout';
       const _this=this;
       axios.post(url)
         .then(function (response) {
