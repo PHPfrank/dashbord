@@ -8,4 +8,5 @@
 * cnpm run dev :本地运行
 * npm run build :打包发布
 
-
+## 页面预览
+![](https://wl2x7ve3z6yq9r6s.oss-cn-hangzhou.aliyuncs.com/2018-12-04/955d06dc5f67e3e422fdf1d8fc05cfad.png)
